@@ -1,0 +1,49 @@
+// Accepts if the given non-negative integer number
+// is divisible by 3. Actually, the final state 'mN'
+// means that the input number equals N modulo 3
+
+accept: m0
+
+START 0 -> m0
+START 1 -> m1
+START 2 -> m2
+START 3 -> m0
+START 4 -> m1
+START 5 -> m2
+START 6 -> m0
+START 7 -> m1
+START 8 -> m2
+START 9 -> m0
+
+m0 0 -> m0
+m0 1 -> m1
+m0 2 -> m2
+m0 3 -> m0
+m0 4 -> m1
+m0 5 -> m2
+m0 6 -> m0
+m0 7 -> m1
+m0 8 -> m2
+m0 9 -> m0
+
+m1 0 -> m1
+m1 1 -> m2
+m1 2 -> m0
+m1 3 -> m1
+m1 4 -> m2
+m1 5 -> m0
+m1 6 -> m1
+m1 7 -> m2
+m1 8 -> m0
+m1 9 -> m1
+
+m2 0 -> m2
+m2 1 -> m0
+m2 2 -> m1
+m2 3 -> m2
+m2 4 -> m0
+m2 5 -> m1
+m2 6 -> m2
+m2 7 -> m0
+m2 8 -> m1
+m2 9 -> m2

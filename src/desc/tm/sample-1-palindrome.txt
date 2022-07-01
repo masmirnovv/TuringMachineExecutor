@@ -1,0 +1,29 @@
+// Accepts if input is a palindrome (with 'a'
+// and 'b' letters only), and rejects otherwise
+
+start: start
+accept: yes
+reject: no
+blank: _
+
+start a -> carry-a X >
+start b -> carry-b X >
+start _ -> yes _ ^
+
+carry-a a -> carry-a a >
+carry-a b -> carry-a b >
+carry-a _ -> check-if-a _ <
+carry-b a -> carry-b a >
+carry-b b -> carry-b b >
+carry-b _ -> check-if-b _ <
+
+check-if-a a -> to-start _ <
+check-if-a b -> no _ ^
+check-if-a X -> yes X ^
+check-if-b a -> no _ ^
+check-if-b b -> to-start _ <
+check-if-b X -> yes X ^
+
+to-start a -> to-start a <
+to-start b -> to-start b <
+to-start X -> start X >

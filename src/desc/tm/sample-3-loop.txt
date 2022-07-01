@@ -1,0 +1,8 @@
+// If input is a sequence of zeros, lopps infinitely,
+// going from left to right and back to left
+
+START 0 -> to-right 0 >
+to-right 0 -> to-right 0 >
+to-right _ -> to-left _ <
+to-left 0 -> to-left 0 <
+to-left _ -> to-right _ >

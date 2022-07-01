@@ -1,0 +1,6 @@
+Execute: UI умирает иногда, если во время исполнения загрузить новую машину
+Edit: обновление errors & warnings кажется происходит в FX Application Thread
+Convert multitape-standard: попробовать чистить от состояний, ведущих в никуда
+Convert nfa-noeps: после конвертации могут появиться юзлесс accept состояния (см. desc/nfa/test.txt)
+Поменять в Convert Iterable на Collection
+Добавить класс Colors со всеми кастомными цветами (и мб ещё немного поиграться с цветами)

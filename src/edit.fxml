@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import org.fxmisc.richtext.CodeArea?>
+<GridPane
+    alignment="center"
+    prefWidth="960"
+    prefHeight="720"
+    style="$DEFAULT_BACK"
+    xmlns="http://javafx.com/javafx/10.0.2-internal"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="EditController">
+
+    <fx:define>
+        <String fx:id="DEFAULT_PANE" fx:value="-fx-background-color: #f2f2ff;"/>
+        <String fx:id="DEFAULT_BACK" fx:value="-fx-background-color: #ffffff;"/>
+        <String fx:id="ERROR_SCROLL" fx:value="-fx-background: #f2f2ff; -fx-border-color: #f2f2ff; -fx-background-color: #f2f2ff" />
+        <String fx:id="EDIT_SCROLL" fx:value="-fx-background: #ffffff; -fx-border-color: #f2f2ff; -fx-background-color: #f2f2ff" />
+        <Double fx:id="MARGIN" fx:value="10.0"/>
+        <Double fx:id="ERROR_B_MARGIN" fx:value="3.0"/>
+
+        <String fx:id="DFA" fx:value="Deterministic finite automaton (DFA)" />
+        <String fx:id="NFA" fx:value="Non-deterministic finite automaton (NFA)" />
+        <String fx:id="DCA" fx:value="Deterministic counter automaton (DCA)" />
+        <String fx:id="DPDA" fx:value="Deterministic pushdown automaton (DPDA)" />
+        <String fx:id="ONEWAY_TM" fx:value="One-way infinite Turing machine (1TM)" />
+        <String fx:id="STANDARD_TM" fx:value="Turing machine (TM)" />
+        <String fx:id="MULTITAPE_TM" fx:value="Multitape Turing machine (MTM)" />
+    </fx:define>
+
+    <padding>
+        <Insets bottom="$MARGIN" left="$MARGIN" right="$MARGIN" top="$MARGIN" />
+    </padding>
+
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints vgrow="ALWAYS" />
+        <RowConstraints />
+    </rowConstraints>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="65.0" hgrow="SOMETIMES" />
+        <ColumnConstraints percentWidth="35.0" hgrow="SOMETIMES" />
+    </columnConstraints>
+
+    <VBox
+        GridPane.rowIndex="0"
+        GridPane.columnIndex="0"
+        GridPane.columnSpan="2"
+        style="$DEFAULT_PANE">
+
+        <GridPane.margin>
+            <Insets bottom="$MARGIN" />
+        </GridPane.margin>
+
+        <HBox>
+
+            <Text
+                text="Path to open">
+                <HBox.margin>
+                    <Insets bottom="14.0" left="$MARGIN" right="$MARGIN" top="14.0" />
+                </HBox.margin>
+            </Text>
+
+            <TextField
+                fx:id="openPath"
+                HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets bottom="$MARGIN" right="4.0" top="$MARGIN" />
+                </HBox.margin>
+            </TextField>
+
+            <Button
+                fx:id="openChooser"
+                text="..."
+                minWidth="20.0">
+                <HBox.margin>
+                    <Insets bottom="$MARGIN" right="$MARGIN" top="$MARGIN" />
+                </HBox.margin>
+            </Button>
+
+            <Button
+                fx:id="openBtn"
+                text="Open"
+                minWidth="40.0">
+                <HBox.margin>
+                    <Insets bottom="$MARGIN" right="$MARGIN" top="$MARGIN" />
+                </HBox.margin>
+            </Button>
+
+        </HBox>
+
+        <Label
+            fx:id="openVerdict"
+            wrapText="true">
+
+            <VBox.margin>
+                <Insets bottom="$MARGIN" left="$MARGIN" right="$MARGIN" />
+            </VBox.margin>
+
+        </Label>
+
+    </VBox>
+
+    <VBox
+        fx:id="editBox"
+        GridPane.rowIndex="1"
+        GridPane.columnIndex="0"
+        GridPane.rowSpan="2"
+        GridPane.fillWidth="true"
+        style="$DEFAULT_PANE">
+
+        <GridPane.margin>
+            <Insets right="$MARGIN" />
+        </GridPane.margin>
+
+        <CodeArea
+            fx:id="edit">
+            <VBox.margin>
+                <Insets bottom="$MARGIN" left="$MARGIN" right="$MARGIN" top="$MARGIN" />
+            </VBox.margin>
+        </CodeArea>
+
+    </VBox>
+
+    <HBox
+        GridPane.rowIndex="1"
+        GridPane.columnIndex="1"
+        minHeight="36.0"
+        style="$DEFAULT_PANE">
+
+        <GridPane.margin>
+            <Insets bottom="$MARGIN" />
+        </GridPane.margin>
+
+        <Text
+            text="Interpret as">
+            <HBox.margin>
+                <Insets bottom="14.0" left="$MARGIN" right="$MARGIN" top="14.0" />
+            </HBox.margin>
+        </Text>
+
+        <ChoiceBox
+            fx:id="interpretType"
+            value="$STANDARD_TM">
+            <HBox.margin>
+                <Insets bottom="$MARGIN" top="$MARGIN" right="$MARGIN"/>
+            </HBox.margin>
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Deterministic finite automaton (DFA)" />
+                    <String fx:value="Non-deterministic finite automaton (NFA)" />
+                    <String fx:value="Deterministic counter automaton (DCA)" />
+                    <String fx:value="Deterministic pushdown automaton (DPDA)" />
+                    <String fx:value="One-way infinite Turing machine (1TM)" />
+                    <String fx:value="Turing machine (TM)" />
+                    <String fx:value="Multitape Turing machine (MTM)" />
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+
+    </HBox>
+
+    <VBox
+        GridPane.rowIndex="2"
+        GridPane.columnIndex="1"
+        style="$DEFAULT_PANE">
+
+        <ScrollPane
+            fx:id="errorScroll"
+            style="$ERROR_SCROLL"
+            vbarPolicy="NEVER"
+            hbarPolicy="NEVER"
+            VBox.vgrow="ALWAYS">
+
+            <VBox.margin>
+                <Insets bottom="$ERROR_B_MARGIN" left="$ERROR_B_MARGIN" right="$ERROR_B_MARGIN" top="$ERROR_B_MARGIN" />
+            </VBox.margin>
+
+            <VBox fx:id="errorBox" />
+
+        </ScrollPane>
+
+    </VBox>
+
+    <VBox
+        GridPane.rowIndex="3"
+        GridPane.columnIndex="0"
+        GridPane.columnSpan="2"
+        minHeight="36.0"
+        style="$DEFAULT_PANE">
+
+        <GridPane.margin>
+            <Insets top="$MARGIN" />
+        </GridPane.margin>
+
+        <HBox>
+
+            <Text
+                text="Path to save">
+                <HBox.margin>
+                    <Insets bottom="14.0" left="$MARGIN" right="$MARGIN" top="14.0" />
+                </HBox.margin>
+            </Text>
+
+            <TextField
+                fx:id="savePath"
+                HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets bottom="$MARGIN" right="4.0" top="$MARGIN" />
+                </HBox.margin>
+            </TextField>
+
+            <Button
+                fx:id="saveChooser"
+                text="..."
+                minWidth="20.0">
+                <HBox.margin>
+                    <Insets bottom="$MARGIN" right="$MARGIN" top="$MARGIN" />
+                </HBox.margin>
+            </Button>
+
+            <Button
+                fx:id="saveBtn"
+                text="Save"
+                minWidth="40.0">
+                <HBox.margin>
+                    <Insets bottom="$MARGIN" right="$MARGIN" top="$MARGIN" />
+                </HBox.margin>
+            </Button>
+
+        </HBox>
+
+        <Label
+            fx:id="saveVerdict"
+            wrapText="true">
+
+            <VBox.margin>
+                <Insets bottom="$MARGIN" left="$MARGIN" right="$MARGIN" />
+            </VBox.margin>
+
+        </Label>
+
+    </VBox>
+
+</GridPane>

@@ -1,0 +1,37 @@
+// Writes a sum of a two given binary non-negative integers.
+// Actually does the same as 'sample-2-plus' from standard
+// Turing machine samples, but two tapes can make it a
+// little bit easier
+
+tapes: 2
+start: s
+accept: done
+reject: invalid-input
+blank: _
+
+s 0 _ -> s _ > 0 >
+s 1 _ -> s _ > 1 >
+s + _ -> to-right _ > _ ^
+to-right 0 _ -> to-right 0 > _ ^
+to-right 1 _ -> to-right 1 > _ ^
+to-right _ _ -> sum-carry-0 _ < _ <
+
+sum-carry-0 0 0 -> sum-carry-0 0 < _ <
+sum-carry-0 0 _ -> sum-carry-0 0 < _ <
+sum-carry-0 _ 0 -> sum-carry-0 0 < _ <
+sum-carry-0 _ _ -> done _ > _ <
+sum-carry-0 0 1 -> sum-carry-0 1 < _ <
+sum-carry-0 _ 1 -> sum-carry-0 1 < _ <
+sum-carry-0 1 0 -> sum-carry-0 1 < _ <
+sum-carry-0 1 _ -> sum-carry-0 1 < _ <
+sum-carry-0 1 1 -> sum-carry-1 0 < _ <
+
+sum-carry-1 0 0 -> sum-carry-0 1 < _ <
+sum-carry-1 0 _ -> sum-carry-0 1 < _ <
+sum-carry-1 _ 0 -> sum-carry-0 1 < _ <
+sum-carry-1 _ _ -> done 1 ^ _ <
+sum-carry-1 0 1 -> sum-carry-1 0 < _ <
+sum-carry-1 _ 1 -> sum-carry-1 0 < _ <
+sum-carry-1 1 0 -> sum-carry-1 0 < _ <
+sum-carry-1 1 _ -> sum-carry-1 0 < _ <
+sum-carry-1 1 1 -> sum-carry-1 1 < _ <

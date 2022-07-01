@@ -1,0 +1,54 @@
+// Writes a sum of a two given binary non-negative integers.
+// Sample input: 10110+1100 (will write 100010)
+
+start: s
+accept: done
+reject: invalid-input
+
+s 0 -> goto-digit 0 >
+s 1 -> goto-digit 1 >
+
+goto-digit 0 -> goto-digit 0 >
+goto-digit 1 -> goto-digit 1 >
+goto-digit + -> goto-digit + >
+goto-digit 0' -> goto-digit 0' >
+goto-digit 1' -> goto-digit 1' >
+goto-digit 2' -> goto-digit 2' >
+goto-digit _ -> grab-digit _ <
+
+grab-digit 0 -> carryA-0 _ <
+grab-digit 1 -> carryA-1 _ <
+grab-digit + -> return-carry-0 _ <
+
+carryA-0 0 -> carryA-0 0 <
+carryA-0 1 -> carryA-0 1 <
+carryA-0 + -> carryB-0 + <
+carryA-1 0 -> carryA-1 0 <
+carryA-1 1 -> carryA-1 1 <
+carryA-1 + -> carryB-1 + <
+
+carryB-0 0' -> carryB-0 0' <
+carryB-0 1' -> carryB-0 1' <
+carryB-0 2' -> carryB-0 2' <
+carryB-0 0 -> goto-digit 0' >
+carryB-0 1 -> goto-digit 1' >
+carryB-0 _ -> goto-digit 0' >
+carryB-1 0' -> carryB-1 0' <
+carryB-1 1' -> carryB-1 1' <
+carryB-1 2' -> carryB-1 2' <
+carryB-1 0 -> goto-digit 1' >
+carryB-1 1 -> goto-digit 2' >
+carryB-1 _ -> goto-digit 1' >
+
+return-carry-0 0' -> return-carry-0 0 <
+return-carry-0 1' -> return-carry-0 1 <
+return-carry-0 2' -> return-carry-1 0 <
+return-carry-0 0 -> return-carry-0 0 <
+return-carry-0 1 -> return-carry-0 1 <
+return-carry-0 _ -> done _ >
+return-carry-1 0' -> return-carry-0 1 <
+return-carry-1 1' -> return-carry-1 0 <
+return-carry-1 2' -> return-carry-1 1 <
+return-carry-1 0 -> return-carry-0 1 <
+return-carry-1 1 -> return-carry-1 0 <
+return-carry-1 _ -> done 1 ^

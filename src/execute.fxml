@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+
+<GridPane
+    alignment="center"
+    prefWidth="960"
+    prefHeight="720"
+    style="$DEFAULT_BACK"
+    xmlns="http://javafx.com/javafx/10.0.2-internal"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="ExecuteController">
+
+    <fx:define>
+        <String fx:id="DEFAULT_PANE" fx:value="-fx-background-color: #f2f2ff;"/>
+        <String fx:id="DEFAULT_BACK" fx:value="-fx-background-color: #ffffff;"/>
+        <String fx:id="DEFAULT_SCROLL" fx:value="-fx-background: #ffffff; -fx-border-color: #f2f2ff; -fx-background-color: #e4e4ff" />
+        <String fx:id="BOLD" fx:value="-fx-font-weight: bold;"/>
+        <String fx:id="MONO_FONT" fx:value="Droid Sans Mono Dotted"/>
+        <Double fx:id="MARGIN" fx:value="10.0"/>
+
+        <String fx:id="DFA" fx:value="Deterministic finite automaton (DFA)" />
+        <String fx:id="NFA" fx:value="Non-deterministic finite automaton (NFA)" />
+        <String fx:id="DCA" fx:value="Deterministic counter automaton (DCA)" />
+        <String fx:id="DPDA" fx:value="Deterministic pushdown automaton (DPDA)" />
+        <String fx:id="ONEWAY_TM" fx:value="One-way infinite Turing machine (1TM)" />
+        <String fx:id="STANDARD_TM" fx:value="Turing machine (TM)" />
+        <String fx:id="MULTITAPE_TM" fx:value="Multitape Turing machine (MTM)" />
+        <String fx:id="DESC_DFA" fx:value="src/desc/dfa/sample-1-even.txt" />
+        <String fx:id="DESC_NFA" fx:value="src/desc/nfa/sample-1-4th-last.txt" />
+        <String fx:id="DESC_DCA" fx:value="src/desc/dca/sample-1-balance.txt" />
+        <String fx:id="DESC_DPDA" fx:value="src/desc/dpda/sample-1-brackets.txt" />
+        <String fx:id="DESC_ONEWAY" fx:value="src/desc/one-tm/sample-1-plus.txt" />
+        <String fx:id="DESC_STANDARD" fx:value="src/desc/tm/sample-1-palindrome.txt" />
+        <String fx:id="DESC_MULTITAPE" fx:value="src/desc/mtm/sample-1-plus.txt" />
+
+        <String fx:id="NOT_LOADED" fx:value="Not loaded" />
+        <String fx:id="NO_MACHINE_ERR" fx:value="No machine uploaded" />
+        <String fx:id="BLANK_ERR" fx:value="The input must not contain blanks/whitespaces" />
+        <String fx:id="DEFAULT_STEP_DELAY" fx:value="0" />
+        <String fx:id="DET_STATE" fx:value="State:" />
+        <String fx:id="NON_DET_STATE" fx:value="Possible states:" />
+    </fx:define>
+
+    <padding>
+        <Insets bottom="$MARGIN" left="$MARGIN" right="$MARGIN" top="$MARGIN" />
+    </padding>
+
+    <rowConstraints>
+        <RowConstraints percentHeight="45.0" vgrow="SOMETIMES" />
+        <RowConstraints percentHeight="55.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50.0" hgrow="SOMETIMES" />
+        <ColumnConstraints percentWidth="50.0" hgrow="SOMETIMES" />
+    </columnConstraints>
+
+    <VBox
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="0"
+        style="$DEFAULT_PANE">
+
+        <GridPane.margin>
+            <Insets right="$MARGIN" bottom="$MARGIN" />
+        </GridPane.margin>
+
+        <HBox>
+            <Text
+                text="Machine type">
+                <HBox.margin>
+                    <Insets left="$MARGIN" top="14.0" />
+                </HBox.margin>
+            </Text>
+            <ChoiceBox
+                fx:id="choiceTypeToLoad"
+                value="$STANDARD_TM">
+                <HBox.margin>
+                    <Insets left="$MARGIN" top="$MARGIN" right="$MARGIN"/>
+                </HBox.margin>
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Deterministic finite automaton (DFA)" />
+                        <String fx:value="Non-deterministic finite automaton (NFA)" />
+                        <String fx:value="Deterministic counter automaton (DCA)" />
+                        <String fx:value="Deterministic pushdown automaton (DPDA)" />
+                        <String fx:value="One-way infinite Turing machine (1TM)" />
+                        <String fx:value="Turing machine (TM)" />
+                        <String fx:value="Multitape Turing machine (MTM)" />
+                    </FXCollections>
+                </items>
+            </ChoiceBox>
+        </HBox>
+        <HBox>
+            <Text
+                text="Path to description file">
+                <HBox.margin>
+                    <Insets left="$MARGIN" top="14.0" />
+                </HBox.margin>
+            </Text>
+            <TextField
+                fx:id="descPath"
+                text="$DESC_STANDARD"
+                HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets left="$MARGIN" top="$MARGIN" />
+                </HBox.margin>
+            </TextField>
+            <Button
+                fx:id="descChooseFile"
+                text="..."
+                minWidth="20.0">
+                <HBox.margin>
+                    <Insets left="4.0" top="$MARGIN" />
+                </HBox.margin>
+            </Button>
+            <Button
+                fx:id="descPathBtn"
+                text="Upload"
+                minWidth="60.0">
+                <HBox.margin>
+                    <Insets left="$MARGIN" top="$MARGIN" right="$MARGIN" />
+                </HBox.margin>
+            </Button>
+        </HBox>
+        <HBox>
+            <Label
+                fx:id="descLoadVerdict"
+                wrapText="true">
+                <HBox.margin>
+                    <Insets left="$MARGIN" top="14.0" right="$MARGIN" bottom="14.0" />
+                </HBox.margin>
+            </Label>
+        </HBox>
+    </VBox>
+
+    <VBox
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="0"
+        style="$DEFAULT_PANE">
+
+        <GridPane.margin>
+            <Insets bottom="$MARGIN" />
+        </GridPane.margin>
+
+        <HBox>
+            <VBox.margin>
+                <Insets left="$MARGIN" top="$MARGIN" right="$MARGIN" bottom="$MARGIN" />
+            </VBox.margin>
+
+            <Text text="Machine description overview"/>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <Text
+                fx:id="descFileName"
+                text="$NOT_LOADED"
+                fill="gray"/>
+
+        </HBox>
+
+        <ScrollPane
+            fx:id="descPane"
+            style="$DEFAULT_SCROLL"
+            visible="false">
+            <VBox.margin>
+                <Insets left="$MARGIN" right="$MARGIN" bottom="$MARGIN" />
+            </VBox.margin>
+
+            <FlowPane>
+                <Text
+                    fx:id="desc">
+                    <font>
+                        <Font name="$MONO_FONT" />
+                    </font>
+                    <FlowPane.margin>
+                        <Insets left="4.0" top="4.0" right="4.0" bottom="4.0" />
+                    </FlowPane.margin>
+                </Text>
+            </FlowPane>
+
+        </ScrollPane>
+
+    </VBox>
+
+
+    <VBox
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="1"
+        GridPane.columnSpan="2"
+        GridPane.fillWidth="true"
+        style="$DEFAULT_PANE">
+
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints percentWidth="40.0" hgrow="SOMETIMES" />
+                <ColumnConstraints percentWidth="10.0" hgrow="SOMETIMES" />
+                <ColumnConstraints percentWidth="50.0" hgrow="SOMETIMES" />
+            </columnConstraints>
+
+            <VBox.margin>
+                <Insets left="$MARGIN" top="$MARGIN" right="$MARGIN" />
+            </VBox.margin>
+
+            <HBox
+                GridPane.columnIndex="0">
+                <Text
+                    text="Input string">
+                    <HBox.margin>
+                        <Insets top="4.0" />
+                    </HBox.margin>
+                </Text>
+
+                <TextField
+                    fx:id="inputString"
+                    HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets left="$MARGIN" />
+                    </HBox.margin>
+                </TextField>
+            </HBox>
+
+            <Region
+                GridPane.columnIndex="1"
+                HBox.hgrow="ALWAYS" />
+
+            <HBox
+                GridPane.columnIndex="2">
+                <Text
+                    text="Step delay (ms)">
+                    <HBox.margin>
+                        <Insets top="4.0" />
+                    </HBox.margin>
+                </Text>
+
+                <TextField
+                    fx:id="stepDelay"
+                    maxWidth="45.0"
+                    text="$DEFAULT_STEP_DELAY">
+                    <HBox.margin>
+                        <Insets left="$MARGIN" />
+                    </HBox.margin>
+                </TextField>
+            </HBox>
+
+        </GridPane>
+
+        <Label
+            fx:id="exeErrorMsg"
+            VBox.vgrow="ALWAYS"
+            text="Machine not loaded"
+            textFill="red"
+            visible="false">
+            <VBox.margin>
+                <Insets left="$MARGIN" top="$MARGIN" right="$MARGIN"/>
+            </VBox.margin>
+        </Label>
+
+        <HBox>
+            <VBox.margin>
+                <Insets left="$MARGIN" top="$MARGIN" right="$MARGIN"/>
+            </VBox.margin>
+
+            <Button
+                fx:id="startBtn"
+                text="Start"
+                minWidth="80.0"
+                style="$BOLD"/>
+            <Button
+                fx:id="stepBtn"
+                text="Make 1 step"
+                minWidth="100.0">
+                <HBox.margin>
+                    <Insets left="$MARGIN"/>
+                </HBox.margin>
+            </Button>
+            <Button
+                fx:id="stopBtn"
+                text="Stop"
+                minWidth="80.0"
+                style="$BOLD">
+                <HBox.margin>
+                    <Insets left="$MARGIN"/>
+                </HBox.margin>
+            </Button>
+            <Button
+                fx:id="resetBtn"
+                text="Reset"
+                minWidth="80.0">
+                <HBox.margin>
+                    <Insets left="$MARGIN"/>
+                </HBox.margin>
+            </Button>
+
+        </HBox>
+
+        <ScrollPane
+            fx:id="exePane"
+            style="$DEFAULT_SCROLL">
+            <VBox.margin>
+                <Insets left="$MARGIN" top="$MARGIN" right="$MARGIN" />
+            </VBox.margin>
+            <GridPane fx:id="exeTable"/>
+        </ScrollPane>
+
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints percentWidth="40.0" hgrow="SOMETIMES" />
+                <ColumnConstraints percentWidth="60.0" hgrow="SOMETIMES" />
+            </columnConstraints>
+
+            <VBox.margin>
+                <Insets left="$MARGIN" top="$MARGIN" right="$MARGIN" bottom="$MARGIN" />
+            </VBox.margin>
+
+            <HBox
+                GridPane.columnIndex="0">
+                <Text
+                    fx:id="stateTxt"
+                    text="$DET_STATE" />
+                <Label
+                    fx:id="state"
+                    style="$BOLD"
+                    wrapText="true">
+                    <HBox.margin>
+                        <Insets left="$MARGIN" />
+                    </HBox.margin>
+                </Label>
+            </HBox>
+
+            <HBox
+                GridPane.columnIndex="1">
+                <Text text="Steps:" />
+                <Text
+                    fx:id="steps"
+                    style="$BOLD">
+                    <HBox.margin>
+                        <Insets left="$MARGIN" />
+                    </HBox.margin>
+                </Text>
+            </HBox>
+        </GridPane>
+
+    </VBox>
+
+</GridPane>

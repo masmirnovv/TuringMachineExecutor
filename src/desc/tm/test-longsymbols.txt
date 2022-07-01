@@ -1,0 +1,26 @@
+START a -> s a >
+s _ -> ss aa >
+ss _ -> sss aaaa >
+sss _ -> ssss aaaaaaaa ^
+ssss aaaaaaaa -> sss _ <
+sss aaaa -> ss _ <
+ss aa -> s _ <
+s a -> ACCEPT _ ^
+
+START W -> t W >
+t _ -> tt WW >
+tt _ -> ttt WWWW >
+ttt _ -> tttt WWWWWWWW ^
+tttt WWWWWWWW -> ttt _ <
+ttt WWWW -> tt _ <
+tt WW -> t _ <
+t W -> ACCEPT _ ^
+
+START ' -> u ' >
+u _ -> uu '' >
+uu _ -> uuu '''' >
+uuu _ -> uuuu '''''''' ^
+uuuu '''''''' -> uuu _ <
+uuu '''' -> uu _ <
+uu '' -> u _ <
+u ' -> ACCEPT _ ^

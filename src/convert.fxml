@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import java.lang.String?>
+<VBox
+    alignment="center"
+    prefWidth="960"
+    prefHeight="720"
+    style="$DEFAULT_BACK"
+    xmlns="http://javafx.com/javafx/10.0.2-internal"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="ConvertController">
+
+    <fx:define>
+        <String fx:id="DEFAULT_BACK" fx:value="-fx-background-color: #ffffff;"/>
+    </fx:define>
+
+    <TextField fx:id="from" text="C:\Users\masmi\Desktop\itmo\java\TuringMachineExecutor\src\desc\dca\sample-2-balance3.txt"/>
+    <TextField fx:id="code" text="dca-2counters"/>
+    <TextField fx:id="to" text="C:\Users\masmi\Desktop\itmo\java\TuringMachineExecutor\src\desc\dca\sample-2-balance3-2counters.txt"/>
+    <Button fx:id="btn" text="Convert" />
+
+</VBox>

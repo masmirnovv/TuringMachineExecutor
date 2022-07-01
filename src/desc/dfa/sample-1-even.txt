@@ -1,0 +1,8 @@
+// Accepts if the input is an even-length sequence of 0s,
+// and rejects if the input is an odd-length sequence of 0s
+
+start: even
+accept: even
+
+even 0 -> odd
+odd 0 -> even

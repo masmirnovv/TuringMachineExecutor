@@ -1,0 +1,15 @@
+// Accepts if the 4th last symbol of a binary string is 0
+start: s
+accept: accepted
+
+s 0 -> s
+s 1 -> s
+
+s 0 -> end-1
+
+end-1 0 -> end-2
+end-1 1 -> end-2
+end-2 0 -> end-3
+end-2 1 -> end-3
+end-3 0 -> accepted
+end-3 1 -> accepted

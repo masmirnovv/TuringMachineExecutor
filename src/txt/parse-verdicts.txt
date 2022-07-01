@@ -1,0 +1,53 @@
+NFA:
+    w: transition:  cyclic eps-transition
+    w: transition: TODO:  identical transitions
+
+DCA:
+    e: transition:  undefined arg (not '=' or '>'), undefined action (not '+1' or '0' or '-1')
+
+DFA, NFA, DCA, DPDA:
+    w: settings:  empty accept states set
+    w: transition:  multi-char symbols (except eps in NFA/DCA/DPDA)
+    w: transition: TODO:  accept states that are unreachable from start state
+    w: transition: TODO:  other states unreachable from start state
+
+DFA, NFA, DCA, DPDA, 1TM, TM, MTM:
+    e: settings:  not 2 args at some/all settings
+    e: transition:  not N args (4/6/3T+3) / less than 3+2S args
+    e: transition:  Nth arg isn't '->'
+
+    w: settings:  duplicated settings
+
+DFA, DCA, DPDA, 1TM, TM, MTM
+    w: transition:  duplicated transition
+
+DCA, DPDA, 1TM:
+    e: transition:  forbidden zero-counter/stackbottom/bound behavior
+
+DPDA:
+    e: transition:  wrong stack separators number after '->'
+    e: transition:  eps in stack pop args
+
+    w: transition:  stack separator in stack pop args
+
+1TM, TM, MTM:
+    e: settings:  start state == accept state
+    e: settings:  start state == reject state
+    e: settings:  accept state == reject state
+    e: transition:  6th arg (direction) parse error
+
+    w: transition:  transition from accept state
+    w: transition:  transition from reject state
+    w: transition:  accept state unreachable from start state
+    w: transition:  other states unreachable from start state
+    w: transition: TODO:  cycles like  x1 y1 -> x2 y2 ^; x2 y2 -> x3 y3 ^; x3 y3 -> x1 y1 ^
+
+1TM:
+    e: settings:  blank symbol == left bound symbol
+
+MTM:
+    e: settings:  tapes number parse error / invalid number of tapes
+    w: settings:  1 tape
+
+DPDA, MTM:
+    w: transition:  read but never written symbols at tape >= 2 / at stacks

@@ -1,0 +1,112 @@
+tapes: 3
+start: s
+accept: done
+reject: invalidInput
+
+s 0 _ _ -> read1 0 ^ _ ^ _ ^
+s 1 _ _ -> read1 1 ^ _ ^ _ ^
+
+read1 0 _ _ -> read1 . > 0 > _ ^
+read1 1 _ _ -> read1 . > 1 > _ ^
+read1 , _ _ -> read2 , > _ ^ _ ^
+read1 _ _ _ -> restore1 _ < _ < _ ^
+
+read2 0 _ _ -> read2 . > _ ^ 0 >
+read2 1 _ _ -> read2 . > _ ^ 1 >
+read2 , _ _ -> compCnt , < _ < _ <
+read2 _ _ _ -> compCnt _ < _ < _ <
+
+compCnt . 0 0 -> compCnt . ^ 0 < 0 <
+compCnt . 0 1 -> compCnt . ^ 0 < 1 <
+compCnt . 1 0 -> compCnt . ^ 1 < 0 <
+compCnt . 1 1 -> compCnt . ^ 1 < 1 <
+compCnt . 0 _ -> put>prepare . ^ 0 < _ ^
+compCnt . 1 _ -> put>prepare . ^ 1 < _ ^
+compCnt . _ 0 -> put<prepare . ^ _ ^ 0 <
+compCnt . _ 1 -> put<prepare . ^ _ ^ 1 <
+compCnt . _ _ -> comp . ^ _ > _ >
+
+comp . 0 0 -> comp . ^ 0 > 0 >
+comp . 0 1 -> put<prepare . ^ 0 < 1 <
+comp . 1 0 -> put>prepare . ^ 1 < 0 <
+comp . 1 1 -> comp . ^ 1 > 1 >
+comp . _ _ -> put<prepare . ^ _ < _ <
+
+put<prepare . 0 0 -> put<prepare . ^ 0 < 0 <
+put<prepare . 0 1 -> put<prepare . ^ 0 < 1 <
+put<prepare . 1 0 -> put<prepare . ^ 1 < 0 <
+put<prepare . 1 1 -> put<prepare . ^ 1 < 1 <
+put<prepare . 0 _ -> put<prepare . ^ 0 < _ ^
+put<prepare . 1 _ -> put<prepare . ^ 1 < _ ^
+put<prepare . _ 0 -> put<prepare . ^ _ ^ 0 <
+put<prepare . _ 1 -> put<prepare . ^ _ ^ 1 <
+put<prepare . _ _ -> put<prepare . < _ ^ _ ^
+put<prepare , _ _ -> put<prepareA . < _ ^ _ ^
+
+put<prepareA . _ _ -> put<prepareA . < _ ^ _ ^
+put<prepareA , _ _ -> put<1 , > _ > _ >
+put<prepareA $ _ _ -> put<1 $ > _ > _ >
+put<prepareA _ _ _ -> put<1 _ > _ > _ >
+
+put<1 . 0 0 -> put<1 0 > _ > 0 ^
+put<1 . 0 1 -> put<1 0 > _ > 1 ^
+put<1 . 1 0 -> put<1 1 > _ > 0 ^
+put<1 . 1 1 -> put<1 1 > _ > 1 ^
+put<1 . _ 0 -> put<2 , > _ ^ 0 ^
+put<1 . _ 1 -> put<2 , > _ ^ 1 ^
+
+put<2 . _ 0 -> put<2 0 > _ ^ _ >
+put<2 . _ 1 -> put<2 1 > _ ^ _ >
+put<2 , _ _ -> skip2nd , < _ ^ _ ^
+put<2 _ _ _ -> return _ < _ ^ _ ^
+
+put>prepare . 0 0 -> put>prepare . ^ 0 < 0 <
+put>prepare . 0 1 -> put>prepare . ^ 0 < 1 <
+put>prepare . 1 0 -> put>prepare . ^ 1 < 0 <
+put>prepare . 1 1 -> put>prepare . ^ 1 < 1 <
+put>prepare . 0 _ -> put>prepare . ^ 0 < _ ^
+put>prepare . 1 _ -> put>prepare . ^ 1 < _ ^
+put>prepare . _ 0 -> put>prepare . ^ _ ^ 0 <
+put>prepare . _ 1 -> put>prepare . ^ _ ^ 1 <
+put>prepare . _ _ -> put>prepare . < _ ^ _ ^
+put>prepare , _ _ -> put>prepareA . < _ ^ _ ^
+
+put>prepareA . _ _ -> put>prepareA . < _ ^ _ ^
+put>prepareA , _ _ -> put>2 , > _ > _ >
+put>prepareA $ _ _ -> put>2 $ > _ > _ >
+put>prepareA _ _ _ -> put>2 _ > _ > _ >
+
+put>2 . 0 0 -> put>2 0 > 0 ^ _ >
+put>2 . 0 1 -> put>2 1 > 0 ^ _ >
+put>2 . 1 0 -> put>2 0 > 1 ^ _ >
+put>2 . 1 1 -> put>2 1 > 1 ^ _ >
+put>2 . 0 _ -> put>1 $ > 0 ^ _ ^
+put>2 . 1 _ -> put>1 $ > 1 ^ _ ^
+
+put>1 . 0 _ -> put>1 0 > _ > _ ^
+put>1 . 1 _ -> put>1 1 > _ > _ ^
+put>1 , _ _ -> skip2nd , < _ ^ _ ^
+put>1 _ _ _ -> return _ < _ ^ _ ^
+
+skip2nd 0 _ _ -> skip2nd 0 < _ ^ _ ^
+skip2nd 1 _ _ -> skip2nd 1 < _ ^ _ ^
+skip2nd , _ _ -> read1 , > _ ^ _ ^
+skip2nd $ _ _ -> read1 $ > _ ^ _ ^
+
+restore1 . 0 _ -> restore1 0 < _ < _ ^
+restore1 . 1 _ -> restore1 1 < _ < _ ^
+restore1 , _ _ -> return , < _ ^ _ ^
+restore1 $ _ _ -> return+ , < _ ^ _ ^
+restore1 _ _ _ -> done _ > _ ^ _ ^
+
+return 0 _ _ -> return 0 < _ ^ _ ^
+return 1 _ _ -> return 1 < _ ^ _ ^
+return , _ _ -> return , < _ ^ _ ^
+return $ _ _ -> return+ , < _ ^ _ ^
+return _ _ _ -> done _ > _ ^ _ ^
+
+return+ 0 _ _ -> return+ 0 < _ ^ _ ^
+return+ 1 _ _ -> return+ 1 < _ ^ _ ^
+return+ , _ _ -> return+ , < _ ^ _ ^
+return+ $ _ _ -> return+ , < _ ^ _ ^
+return+ _ _ _ -> read1 _ > _ ^ _ ^
